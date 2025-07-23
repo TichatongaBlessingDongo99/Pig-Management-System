@@ -5,6 +5,7 @@ import { UpdateFarmDto } from './dto/update-farm.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
+import { UserRole } from '../entities/user.entity';
 
 @Controller('farms')
 @UseGuards(JwtAuthGuard)
@@ -13,7 +14,7 @@ export class FarmsController {
 
   @Post()
   @UseGuards(RolesGuard)
-  @Roles('admin', 'manager')
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   create(@Body() createFarmDto: CreateFarmDto) {
     return this.farmsService.create(createFarmDto);
   }
@@ -30,14 +31,14 @@ export class FarmsController {
 
   @Patch(':id')
   @UseGuards(RolesGuard)
-  @Roles('admin', 'manager')
+  @Roles(UserRole.ADMIN, UserRole.MANAGER)
   update(@Param('id') id: string, @Body() updateFarmDto: UpdateFarmDto) {
     return this.farmsService.update(id, updateFarmDto);
   }
 
   @Delete(':id')
   @UseGuards(RolesGuard)
-  @Roles('admin')
+  @Roles(UserRole.ADMIN)
   remove(@Param('id') id: string) {
     return this.farmsService.remove(id);
   }
