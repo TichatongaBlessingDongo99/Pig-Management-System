@@ -3,7 +3,24 @@ import { CreatePigDto } from './dto/create-pig.dto';
 import { UpdatePigDto } from './dto/update-pig.dto';
 
 // Mock data for development
-const mockPigs = [
+interface MockPig {
+  id: string;
+  tag_id: string;
+  rfid_tag?: string;
+  sex: string;
+  breed: string;
+  date_of_birth: string;
+  weight: number;
+  status: string;
+  batch_id?: string;
+  current_pen_id?: string;
+  sire_id?: string | null;
+  dam_id?: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
+const mockPigs: MockPig[] = [
   {
     id: '1',
     tag_id: 'PIG001',
@@ -56,14 +73,23 @@ const mockPigs = [
 
 @Injectable()
 export class PigsService {
-  private pigs = [...mockPigs];
+  private pigs: MockPig[] = [...mockPigs];
   private nextId = 4;
 
-  create(createPigDto: CreatePigDto) {
-    const newPig = {
+  create(createPigDto: CreatePigDto): MockPig {
+    const newPig: MockPig = {
       id: this.nextId.toString(),
-      ...createPigDto,
+      tag_id: createPigDto.tag_id,
+      rfid_tag: createPigDto.rfid_tag,
+      sex: createPigDto.sex,
+      breed: createPigDto.breed,
+      date_of_birth: createPigDto.date_of_birth,
+      weight: createPigDto.weight,
       status: createPigDto.status || 'alive',
+      batch_id: createPigDto.batch_id,
+      current_pen_id: createPigDto.current_pen_id,
+      sire_id: createPigDto.sire_id || null,
+      dam_id: createPigDto.dam_id || null,
       created_at: new Date(),
       updated_at: new Date(),
     };
