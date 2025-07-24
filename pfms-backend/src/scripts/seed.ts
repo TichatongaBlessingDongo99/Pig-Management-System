@@ -22,21 +22,21 @@ async function seedDatabase() {
   const feedingService = app.get(FeedingService);
 
   try {
-    // Create sample farms
     console.log('Creating sample farms...');
     const farm1 = await farmsService.create({
       name: 'Green Valley Pig Farm',
       location: 'Rural District, Agricultural Zone',
       contact_info: 'contact@greenvalley.com | +1-555-0123',
     });
+    console.log(`✅ Farm created: ${farm1.name}`);
 
     const farm2 = await farmsService.create({
       name: 'Sunrise Swine Ranch',
       location: 'Northern Agricultural District',
       contact_info: 'info@sunriseranch.com | +1-555-0456',
     });
+    console.log(`✅ Farm created: ${farm2.name}`);
 
-    // Create sample pens
     console.log('Creating sample pens...');
     const pen1 = await penService.create({
       pen_number: 'PEN-001',
@@ -46,6 +46,7 @@ async function seedDatabase() {
       location: 'Building A, Section 1',
       notes: 'Climate controlled farrowing pen',
     });
+    console.log(`✅ Pen created: ${pen1.pen_number}`);
 
     const pen2 = await penService.create({
       pen_number: 'PEN-002',
@@ -55,6 +56,7 @@ async function seedDatabase() {
       location: 'Building A, Section 2',
       notes: 'Nursery pen for young piglets',
     });
+    console.log(`✅ Pen created: ${pen2.pen_number}`);
 
     const pen3 = await penService.create({
       pen_number: 'PEN-003',
@@ -64,8 +66,8 @@ async function seedDatabase() {
       location: 'Building B, Section 1',
       notes: 'Growing pen for adolescent pigs',
     });
+    console.log(`✅ Pen created: ${pen3.pen_number}`);
 
-    // Create sample batches
     console.log('Creating sample batches...');
     const batch1 = await batchService.create({
       batch_number: 'BATCH-2024-001',
@@ -74,6 +76,7 @@ async function seedDatabase() {
       start_date: new Date('2024-01-15'),
       notes: 'High-quality Yorkshire breeding stock',
     });
+    console.log(`✅ Batch created: ${batch1.batch_number}`);
 
     const batch2 = await batchService.create({
       batch_number: 'BATCH-2024-002',
@@ -82,8 +85,8 @@ async function seedDatabase() {
       start_date: new Date('2024-02-01'),
       notes: 'Premium Duroc breeding program',
     });
+    console.log(`✅ Batch created: ${batch2.batch_number}`);
 
-    // Create sample pigs
     console.log('Creating sample pigs...');
     const pig1 = await pigsService.create({
       tag_id: 'PIG-001',
@@ -95,6 +98,7 @@ async function seedDatabase() {
       batch_id: batch1.id,
       current_pen_id: pen1.id,
     });
+    console.log(`✅ Pig created: ${pig1.tag_id}`);
 
     const pig2 = await pigsService.create({
       tag_id: 'PIG-002',
@@ -106,6 +110,7 @@ async function seedDatabase() {
       batch_id: batch1.id,
       current_pen_id: pen2.id,
     });
+    console.log(`✅ Pig created: ${pig2.tag_id}`);
 
     const pig3 = await pigsService.create({
       tag_id: 'PIG-003',
@@ -118,8 +123,8 @@ async function seedDatabase() {
       batch_id: batch1.id,
       current_pen_id: pen2.id,
     });
+    console.log(`✅ Pig created: ${pig3.tag_id}`);
 
-    // Create sample health records
     console.log('Creating sample health records...');
     await healthService.create({
       pig_id: pig1.id,
@@ -130,6 +135,7 @@ async function seedDatabase() {
       veterinarian: 'Dr. Smith',
       notes: 'Regular health checkup - all good',
     });
+    console.log(`✅ Health record created for pig: ${pig1.tag_id}`);
 
     await healthService.create({
       pig_id: pig2.id,
@@ -140,8 +146,8 @@ async function seedDatabase() {
       veterinarian: 'Dr. Johnson',
       notes: 'Annual vaccination completed',
     });
+    console.log(`✅ Health record created for pig: ${pig2.tag_id}`);
 
-    // Create sample feeding records
     console.log('Creating sample feeding records...');
     await feedingService.create({
       pig_id: pig1.id,
@@ -151,6 +157,7 @@ async function seedDatabase() {
       cost_per_kg: 6.00,
       notes: 'Regular morning feeding',
     });
+    console.log(`✅ Feeding record created for pig: ${pig1.tag_id}`);
 
     await feedingService.create({
       pig_id: pig2.id,
@@ -160,6 +167,7 @@ async function seedDatabase() {
       cost_per_kg: 6.00,
       notes: 'High protein finisher feed',
     });
+    console.log(`✅ Feeding record created for pig: ${pig2.tag_id}`);
 
     console.log('✅ Database seeding completed successfully!');
     console.log('\n📊 Sample data created:');
