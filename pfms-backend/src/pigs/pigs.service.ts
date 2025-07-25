@@ -3,7 +3,7 @@ import { CreatePigDto } from './dto/create-pig.dto';
 import { UpdatePigDto } from './dto/update-pig.dto';
 
 // Mock data for development
-interface MockPig {
+export interface MockPig {
   id: string;
   tag_id: string;
   rfid_tag?: string;

@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
-import { PigsService } from './pigs.service';
+import { PigsService, MockPig } from './pigs.service';
 import { CreatePigDto } from './dto/create-pig.dto';
 import { UpdatePigDto } from './dto/update-pig.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -15,12 +15,12 @@ export class PigsController {
   @Post()
   @UseGuards(RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.MANAGER)
-  create(@Body() createPigDto: CreatePigDto) {
+  create(@Body() createPigDto: CreatePigDto): MockPig {
     return this.pigsService.create(createPigDto);
   }
 
   @Get()
-  findAll(@Query('status') status?: string, @Query('batch') batchId?: string) {
+  findAll(@Query('status') status?: string, @Query('batch') batchId?: string): MockPig[] {
     if (status) {
       return this.pigsService.findByStatus(status);
     }
@@ -31,31 +31,31 @@ export class PigsController {
   }
 
   @Get('statistics')
-  getStatistics() {
+  getStatistics(): any {
     return this.pigsService.getStatistics();
   }
 
   @Get('tag/:tagId')
-  findByTagId(@Param('tagId') tagId: string) {
+  findByTagId(@Param('tagId') tagId: string): MockPig {
     return this.pigsService.findByTagId(tagId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): MockPig {
     return this.pigsService.findOne(id);
   }
 
   @Patch(':id')
   @UseGuards(RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.VET)
-  update(@Param('id') id: string, @Body() updatePigDto: UpdatePigDto) {
+  update(@Param('id') id: string, @Body() updatePigDto: UpdatePigDto): MockPig {
     return this.pigsService.update(id, updatePigDto);
   }
 
   @Delete(':id')
   @UseGuards(RolesGuard)
   @Roles(UserRole.ADMIN)
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): { message: string; pig: MockPig } {
     return this.pigsService.remove(id);
   }
 }
